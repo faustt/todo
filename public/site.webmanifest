@@ -1,12 +1,12 @@
 {
     "short_name": "Todo",
-    "name": "Faustt Todo",
+    "name": "Todo",
     "description": "Keep your todos in order.",
     "start_url": "/",
-    "background_color": "#60A5FA",
+    "background_color": "#FBBF24",
     "display": "standalone",
     "scope": "/",
-    "theme_color": "#60A5FA",
+    "theme_color": "#FBBF24",
     "icons": [
         {
             "src": "/icons/icon-192.png",
