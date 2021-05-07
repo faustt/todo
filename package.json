@@ -4,7 +4,7 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build && yarn build:post",
-        "build:post": "nde scripts/postbuild",
+        "build:post": "node scripts/postbuild",
         "serve": "vite preview",
         "format": "prettier --check .",
         "format:fix": "prettier --write .",
