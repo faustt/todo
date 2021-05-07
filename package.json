@@ -3,7 +3,8 @@
     "version": "0.0.0",
     "scripts": {
         "dev": "vite",
-        "build": "vite build",
+        "build": "vite build && yarn build:post",
+        "build:post": "nde scripts/postbuild",
         "serve": "vite preview",
         "format": "prettier --check .",
         "format:fix": "prettier --write .",
