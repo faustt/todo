@@ -7,6 +7,7 @@
     "display": "standalone",
     "scope": "/",
     "theme_color": "#FBBF24",
+    "orientation": "portrait",
     "icons": [
         {
             "src": "/icons/icon-192.png",
@@ -26,5 +27,6 @@
             "sizes": "196x196",
             "purpose": "maskable"
         }
-    ]
+    ],
+    "categories": ["time", "management", "scheduling", "memo"]
 }
