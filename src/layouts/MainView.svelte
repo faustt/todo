@@ -2,12 +2,17 @@
     import Router, { push, location } from "svelte-spa-router";
     import Lists from "../pages/Lists.svelte";
     import Settings from "../pages/Settings.svelte";
+    import colors from "tailwindcss/colors";
 
     const routes = {
         "/lists": Lists,
         "/settings": Settings,
     };
 </script>
+
+<svelte:head>
+    <meta name="theme-color" content={colors.yellow["500"]} />
+</svelte:head>
 
 <div class="fixed top-0 right-0 bottom-0 left-0 flex flex-col items-stretch">
     <div
