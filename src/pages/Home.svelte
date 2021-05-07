@@ -114,7 +114,7 @@
     </ReorderList>
 </div>
 
-<div
+<!-- <div
     style="width:512px;height:512px"
     class="m-4 bg-gradient-to-bl from-yellow-300 to-yellow-400 text-white flex items-center justify-center"
 >
@@ -126,4 +126,4 @@
             clip-rule="evenodd"
         />
     </svg>
-</div>
+</div> -->
