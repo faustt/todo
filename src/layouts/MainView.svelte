@@ -10,6 +10,11 @@
 </script>
 
 <div class="fixed top-0 right-0 bottom-0 left-0 flex flex-col items-stretch">
+    <div
+        class="flex flex-row p-4 border-b-2 border-yellow-500 text-lg bg-yellow-400 text-white font-semibold tracking-tight"
+    >
+        Todo
+    </div>
     <div class="flex-1 self-stretch overflow-auto">
         <Router {routes} />
     </div>
@@ -39,7 +44,7 @@
 
 <style lang="postcss">
     .menu-bar-item {
-        @apply text-gray-400 p-4 active:bg-gray-200 focus:outline-none flex-1 flex flex-col items-center border-t border-gray-300;
+        @apply text-gray-400 p-4 active:bg-gray-200 focus:outline-none flex-1 flex flex-col items-center border-t-2 border-gray-300;
     }
 
     .menu-bar-item.active {
