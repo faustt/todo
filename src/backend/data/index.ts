@@ -1,12 +1,15 @@
 import * as backend from "..";
 import events from "./events";
-import { refresh } from "./getters";
+import { invalidate, refresh } from "./getters";
 
 backend.events.commands.registerEventProcessor({
     name: "data",
     events,
     hooks: {
         afterKnownEvent() {
+            invalidate();
+        },
+        onSuspend() {
             refresh();
         },
     },

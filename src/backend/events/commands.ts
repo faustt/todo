@@ -22,6 +22,7 @@ export interface CreateEventProcessorArgs {
     hooks?: {
         beforeKnownEvent?: (event: Event) => void | Promise<void>;
         afterKnownEvent?: (event: Event) => void | Promise<void>;
+        onSuspend?: () => void | Promise<void>;
     };
 }
 
@@ -82,6 +83,8 @@ export default {
                         lastEventOrder: -1,
                     };
                 }
+
+                console.log(args.name, entry);
             };
 
             await refreshEntry();
@@ -202,6 +205,20 @@ export default {
                         "color:black",
                     );
 
+                    try {
+                        await args.hooks?.onSuspend?.();
+                    } catch (e) {
+                        console.error(
+                            `%cEvent Processor%c${args.name}%c error in %conSuspend%c hook\n\n`,
+                            "color:white;background:green;padding:0 0.5em",
+                            "color:white;background:blue;padding:0 0.5em",
+                            "color:black",
+                            "color:yellow",
+                            "color:black",
+                            e,
+                        );
+                    }
+
                     await notification();
                     await refreshEntry();
                 }
@@ -218,7 +235,7 @@ export default {
 
     async resetEventProcessor(args: ResetEventProcessorArgs) {
         await db.table("processors").where({ name: args.name }).delete();
-        notifyEventProcessors();
+        notifyEventProcessor(args.name);
     },
 
     async clearData() {
@@ -273,6 +290,13 @@ function processQueue() {
         console.log("stopped event queue processing");
         isQueueProcessing = false;
     })();
+}
+
+function notifyEventProcessor(name: string) {
+    const processor = eventProcessors.get(name);
+    if (processor) {
+        processor.notify();
+    }
 }
 
 function notifyEventProcessors() {

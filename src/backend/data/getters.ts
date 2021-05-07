@@ -78,24 +78,14 @@ export default {
 
 const storeRefreshers = new Set<() => void>();
 const storeInvalidators = new Set<() => void>();
-let refreshTimeout: NodeJS.Timeout | null = null;
 
 export function refresh() {
-    invalidate();
-
-    if (refreshTimeout) {
-        clearTimeout(refreshTimeout);
+    for (const refresh of storeRefreshers) {
+        refresh();
     }
-
-    refreshTimeout = setTimeout(() => {
-        console.log("refreshing");
-        for (const refresh of storeRefreshers) {
-            refresh();
-        }
-    }, 100);
 }
 
-function invalidate() {
+export function invalidate() {
     for (const invalidator of storeInvalidators) {
         invalidator();
     }
