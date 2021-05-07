@@ -10,6 +10,12 @@
     "orientation": "portrait",
     "icons": [
         {
+            "src": "/icons/icon-196.png",
+            "type": "image/png",
+            "sizes": "196x196",
+            "purpose": "maskable"
+        },
+        {
             "src": "/icons/icon-192.png",
             "type": "image/png",
             "sizes": "192x192",
@@ -20,12 +26,6 @@
             "type": "image/png",
             "sizes": "512x512",
             "purpose": "any"
-        },
-        {
-            "src": "/icons/icon-196.png",
-            "type": "image/png",
-            "sizes": "196x196",
-            "purpose": "maskable"
         }
     ],
     "categories": ["time", "management", "scheduling", "memo"]

@@ -54,7 +54,7 @@
             on:submit|preventDefault={createNewTodo}
             disabled={isNewTodoModalWorking}
         >
-            <div class="text-lg font-semibold tracking-tight text-gray-600 select-none">Eintrag hinzufügen</div>
+            <div class="text-lg font-semibold tracking-tight text-gray-600 select-none">Add entry</div>
             <!-- svelte-ignore a11y-autofocus -->
             <input
                 disabled={isNewTodoModalWorking}
