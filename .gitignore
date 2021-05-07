@@ -3,7 +3,7 @@
 /.vscode/
 .DS_Store
 .yarn/*
-# !.yarn/cache
+!.yarn/cache
 !.yarn/releases
 !.yarn/plugins
 !.yarn/sdks
