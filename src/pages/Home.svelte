@@ -30,6 +30,7 @@
             add({
                 intent: "info",
                 text: `Eintrag hinzugefügt: ${title}`,
+                duration: 2000,
             });
 
             title = "";
