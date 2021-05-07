@@ -3,12 +3,21 @@ import db from "./database";
 
 export default {
     async "todo/created"(event) {
-        await db.table("todos").put({
-            id: event.payload.id,
-            userId: event.payload.userId,
-            createdAt: event.timestamp,
-            updatedAt: event.timestamp,
-            title: event.payload.title,
+        // Do not simply put the new item into the database since some
+        // browsers (firefox, i am sadly looking at you) do not register
+        // auto incremented values in compound indices at the first write.
+        // To mitigate this, simply write the item again since this time
+        // we know the auto incremented values.
+        await db.transaction("readwrite", "todos", async () => {
+            const key = await db.table("todos").put({
+                id: event.payload.id,
+                userId: event.payload.userId,
+                createdAt: event.timestamp,
+                updatedAt: event.timestamp,
+                title: event.payload.title,
+            });
+            const item = await db.table("todos").get(key);
+            await db.table("todos").put(item);
         });
     },
 
