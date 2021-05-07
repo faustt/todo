@@ -32,6 +32,9 @@
     };
 
     const startDragging = (event: MouseEvent | TouchEvent, index: number) => {
+        event.stopPropagation();
+        event.preventDefault();
+
         draggingToIndex = draggingFromIndex = index;
         draggingY = 0;
         draggingElement = event.currentTarget as HTMLDivElement;
@@ -137,12 +140,7 @@
     });
 </script>
 
-<div
-    class="flex flex-col relative {className}"
-    style="touch-action: none;"
-    class:select-none={draggingToIndex >= 0}
-    bind:this={rootElement}
->
+<div class="flex flex-col relative {className}" class:select-none={draggingToIndex >= 0} bind:this={rootElement}>
     {#each items as item, index (id(item))}
         <div
             class="item"
