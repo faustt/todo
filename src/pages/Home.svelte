@@ -1,6 +1,7 @@
 <script lang="ts">
     import * as backend from "../backend";
     import ReorderList from "../components/ReorderList.svelte";
+    import { add } from "../components/Toasts.svelte";
 
     let name = "";
     let password = "";
@@ -24,6 +25,11 @@
             await backend.data.commands.createTodo({
                 userId,
                 title,
+            });
+
+            add({
+                intent: "info",
+                text: `Eintrag hinzugefügt: ${title}`,
             });
 
             title = "";
