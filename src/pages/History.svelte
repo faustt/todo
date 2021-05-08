@@ -5,8 +5,30 @@
         desc: true,
     });
 
+    const isSameDay = (a: Date, b: Date) => {
+        return a.getDate() === b.getDate() && a.getMonth() === b.getMonth() && a.getFullYear() === b.getFullYear();
+    };
+
+    const today = () => new Date();
+    const yesterday = () => {
+        const date = new Date();
+        date.setDate(date.getDate() - 1);
+        return date;
+    };
+
     const getDateKey = (date: Date) => {
-        return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
+        if (isSameDay(date, today())) {
+            return "today";
+        }
+        if (isSameDay(date, yesterday())) {
+            return "yesterday";
+        }
+
+        const day = date.getDate().toString().padStart(2, "0");
+        const month = (date.getMonth() + 1).toString().padStart(2, "0");
+        const year = date.getFullYear().toString().padStart(4, "0");
+
+        return `${day}.${month}.${year}`;
     };
 
     const groupEventsByDay = (events: any[]): { dateKey: string; items: any[] }[] => {
