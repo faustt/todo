@@ -21,6 +21,14 @@ export type ChangeTodoPositionArgs =
           afterId: string;
       };
 
+export interface MarkTodoAsDoneArgs {
+    id: string;
+}
+
+export interface MarkTodoAsUnfinishedArgs {
+    id: string;
+}
+
 export default {
     async createTodo(args: CreateTodoArgs) {
         const id = uuid();
@@ -64,6 +72,26 @@ export default {
             payload: {
                 id: args.id,
                 ...position,
+            },
+        });
+    },
+
+    async markTodoAsDone(args: MarkTodoAsDoneArgs) {
+        backend.events.commands.publish({
+            scope: "todo",
+            event: "done",
+            payload: {
+                id: args.id,
+            },
+        });
+    },
+
+    async markTodoAsUnfinished(args: MarkTodoAsDoneArgs) {
+        backend.events.commands.publish({
+            scope: "todo",
+            event: "unfinished",
+            payload: {
+                id: args.id,
             },
         });
     },

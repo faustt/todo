@@ -5,6 +5,7 @@
     export { className as class };
     export let items = [];
     export let id = (item: any) => item;
+    export let disableDragging = false;
 
     const dispatch = createEventDispatcher();
 
@@ -32,6 +33,10 @@
     };
 
     const startDragging = (event: MouseEvent | TouchEvent, index: number) => {
+        if (disableDragging) {
+            return;
+        }
+
         event.stopPropagation();
         event.preventDefault();
 

@@ -15,6 +15,7 @@ export default {
                 createdAt: event.timestamp,
                 updatedAt: event.timestamp,
                 title: event.payload.title,
+                isDone: false,
             });
             const item = await db.table("todos").get(key);
             await db.table("todos").put(item);
@@ -23,6 +24,14 @@ export default {
 
     async "todo/deleted"(event) {
         await db.table("todos").where({ id: event.payload.id }).delete();
+    },
+
+    async "todo/done"(event) {
+        await db.table("todos").where({ id: event.payload.id }).modify({ isDone: true });
+    },
+
+    async "todo/unfinished"(event) {
+        await db.table("todos").where({ id: event.payload.id }).modify({ isDone: false });
     },
 
     async "todo/position-changed"(event) {
