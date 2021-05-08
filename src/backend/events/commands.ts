@@ -35,6 +35,13 @@ export interface ResetEventProcessorArgs {
     name: string;
 }
 
+export interface GetEventsArgs {
+    /**
+     * Whether or not to sort by descending order.
+     */
+    desc?: boolean;
+}
+
 export default {
     async publish(args: PublishArgs) {
         pushToQueue({
@@ -241,6 +248,15 @@ export default {
     async clearData() {
         await db.delete();
     },
+
+    async getEvents(args?: GetEventsArgs) {
+        let collection = db.table("events").orderBy("[timestamp+order]");
+        if (args?.desc) {
+            collection = collection.reverse();
+        }
+
+        return await collection.toArray();
+    },
 };
 
 interface Event {
@@ -279,7 +295,13 @@ function processQueue() {
             queue = rest;
 
             try {
-                await db.table("events").put(event);
+                await db.transaction("readwrite", "events", async () => {
+                    // Fix for browsers that do not properly support auto-
+                    // incremented primary keys in compound indices (firefox).
+                    const key = await db.table("events").put(event);
+                    const actualData = await db.table("events").get(key);
+                    await db.table("events").put(actualData);
+                });
             } catch {
                 // TODO: handle error
             }

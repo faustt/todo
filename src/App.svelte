@@ -11,6 +11,7 @@
         "/": Home,
         "/lists": MainView,
         "/settings": MainView,
+        "/history": MainView,
         "/login": Login,
         "/register": Register,
         "*": NotFound,

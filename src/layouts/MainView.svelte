@@ -2,11 +2,13 @@
     import Router, { push, location } from "svelte-spa-router";
     import Lists from "../pages/Lists.svelte";
     import Settings from "../pages/Settings.svelte";
+    import History from "../pages/History.svelte";
     import colors from "tailwindcss/colors";
 
     const routes = {
         "/lists": Lists,
         "/settings": Settings,
+        "/history": History,
     };
 </script>
 
@@ -24,6 +26,25 @@
         <Router {routes} />
     </div>
     <div class="flex flex-row">
+        <button
+            class="menu-bar-item"
+            class:active={/^\/history(?:$|\/)/.test($location)}
+            on:click={() => push("/history")}
+            ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+            </svg>
+        </button>
         <button class="menu-bar-item" class:active={/^\/lists(?:$|\/)/.test($location)} on:click={() => push("/lists")}>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path

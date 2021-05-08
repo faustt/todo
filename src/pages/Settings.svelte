@@ -35,6 +35,7 @@
     }
 </script>
 
+<div class="text-2xl px-4 pt-4 p-8 text-center">Settings</div>
 <div class="flex flex-col gap-2 py-2">
     {#await isPersisted then hasPermission}
         {#if !hasPermission}
