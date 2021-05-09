@@ -1,5 +1,5 @@
-const fs = require("fs");
-const cp = require("child_process");
+import fs from "fs";
+import cp from "child_process";
 
 const commit = cp.execSync("git rev-parse HEAD").toString().trim();
 const commitShort = cp.execSync("git rev-parse --short HEAD").toString().trim();
@@ -14,4 +14,3 @@ commit (short): ${commitShort}
 
 `.trim(),
 );
-console.log(commit, commitShort);

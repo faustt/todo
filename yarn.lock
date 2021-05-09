@@ -1427,6 +1427,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^14":
+  version: 14.14.44
+  resolution: "@types/node@npm:14.14.44"
+  checksum: 5c4db716325fc8a25b5b76b800acf0ff00c8fa1e7cfcb764fc79d79594939488cb9d2a756e188eb8e8a36da51e8e2be1ffe859be901b338779cb0aa12ad73b3a
+  languageName: node
+  linkType: hard
+
 "@types/parse-json@npm:^4.0.0":
   version: 4.0.0
   resolution: "@types/parse-json@npm:4.0.0"
@@ -5330,6 +5337,7 @@ fsevents@~2.3.1:
   resolution: "todo@workspace:."
   dependencies:
     "@sveltejs/vite-plugin-svelte": ^1.0.0-next.7
+    "@types/node": ^14
     "@types/prettier": ^2
     "@types/uuid": ^8
     autoprefixer: ^10.2.5
@@ -5345,6 +5353,7 @@ fsevents@~2.3.1:
     svelte-spa-router: ^3.1.0
     svex: ^1.0.0-alpha.1
     tailwindcss: ^2.1.1
+    ts-node: ^9.1.1
     ts-node-dev: ^1.1.6
     typescript: ^4.2.4
     uuid: ^8.3.2
@@ -5406,7 +5415,7 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"ts-node@npm:^9.0.0":
+"ts-node@npm:^9.0.0, ts-node@npm:^9.1.1":
   version: 9.1.1
   resolution: "ts-node@npm:9.1.1"
   dependencies:
