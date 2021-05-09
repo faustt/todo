@@ -1,6 +1,7 @@
 <script lang="ts">
     import * as backend from "../backend";
-    import ReorderList from "../components/ReorderList.svelte";
+    import ReorderList from "./ReorderList.svelte";
+    import Dialog from "./Dialog.svelte";
 
     let isEditing = false;
     let userId = localStorage.getItem("faustt.todo.userId") ?? "";
@@ -204,33 +205,17 @@
     {/if}
 </button>
 
-{#if isNewTodoModalOpen}
-    <div
-        class="fixed top-0 right-0 bottom-0 left-0 bg-gray-700 bg-opacity-60 flex items-center justify-center p-4"
-        on:click|self={closeNewTodoModal}
-    >
-        <form
-            class="open-new-todo-modal flex flex-col gap-4"
-            on:submit|preventDefault={createNewTodo}
+<Dialog bind:open={isNewTodoModalOpen}>
+    <form class="flex flex-col gap-4" on:submit|preventDefault={createNewTodo} disabled={isNewTodoModalWorking}>
+        <div class="text-lg font-semibold tracking-tight text-gray-600 select-none">Add entry</div>
+        <!-- svelte-ignore a11y-autofocus -->
+        <input
             disabled={isNewTodoModalWorking}
-        >
-            <div class="text-lg font-semibold tracking-tight text-gray-600 select-none">Add entry</div>
-            <!-- svelte-ignore a11y-autofocus -->
-            <input
-                disabled={isNewTodoModalWorking}
-                type="text"
-                placeholder="text"
-                bind:value={newTodoTitle}
-                class="w-full border-2 border-gray-300 p-2 focus:outline-none focus:border-yellow-400 rounded"
-                autofocus
-            />
-        </form>
-    </div>
-{/if}
-
-<style lang="postcss">
-    .open-new-todo-modal {
-        @apply bg-white p-4 rounded-md;
-        min-width: 16rem;
-    }
-</style>
+            type="text"
+            placeholder="text"
+            bind:value={newTodoTitle}
+            class="w-full border-2 border-gray-300 p-2 focus:outline-none focus:border-yellow-400 rounded"
+            autofocus
+        />
+    </form>
+</Dialog>
