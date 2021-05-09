@@ -1,9 +1,12 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import * as backend from "../backend";
+    import Dialog from "../components/Dialog.svelte";
     import { add } from "../components/Toasts.svelte";
 
     let hasStoragePermission = false;
+    let isClearDataDialogOpen = false;
+    let clearDataDialogConfirmation = "";
 
     onMount(() => {
         navigator?.storage?.persisted()?.then((result) => {
@@ -32,13 +35,28 @@
         }
     }
 
+    function openClearDataDialog() {
+        isClearDataDialogOpen = true;
+    }
+
     async function clearData() {
+        if (clearDataDialogConfirmation !== "delete") {
+            add({
+                intent: "info",
+                text: "Please type delete to confirm.",
+            });
+            return;
+        }
+
         add({ intent: "info", text: "All data is getting deleted" });
 
         await backend.data.commands.clearData();
         await backend.auth.commands.clearData();
         await backend.events.commands.clearData();
         await window.location.reload();
+
+        clearDataDialogConfirmation = "";
+        isClearDataDialogOpen = false;
     }
 </script>
 
@@ -80,10 +98,32 @@
         <div class="flex-1 flex items-center">Delete all data associated with this service.</div>
         <div class="w-36 flex items-center justify-center">
             <button
-                on:click={clearData}
+                on:click={openClearDataDialog}
                 class="bg-red-500 flex-1 p-2 active:bg-red-600 text-white focus:outline-none border-2 border-red-400 focus:border-red-700"
-                >Clear data</button
+                >Delete data</button
             >
         </div>
     </div>
 </div>
+
+<Dialog bind:open={isClearDataDialogOpen}>
+    <form class="flex flex-col" on:submit|preventDefault={clearData}>
+        <div>Do you really want to delete all data?</div>
+        <div class="font-bold">This cannot be undone!</div>
+        <div class="mt-4">To confirm, please type <i>delete</i> in the field below:</div>
+        <div class="relative h-12 mt-2">
+            <!-- svelte-ignore a11y-autofocus -->
+            <input
+                type="text"
+                placeholder=""
+                bind:value={clearDataDialogConfirmation}
+                class="w-full border-2 border-gray-300 p-2 focus:outline-none focus:border-yellow-400 rounded"
+                autofocus
+            />
+        </div>
+        <button
+            class="mt-4 bg-red-500 flex-1 p-2 active:bg-red-600 text-white focus:outline-none border-2 border-red-400 focus:border-red-700"
+            >Delete all data</button
+        >
+    </form>
+</Dialog>
