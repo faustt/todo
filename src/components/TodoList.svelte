@@ -2,6 +2,7 @@
     import * as backend from "../backend";
     import ReorderList from "./ReorderList.svelte";
     import Dialog from "./Dialog.svelte";
+    import { add } from "./Toasts.svelte";
 
     let isEditing = false;
     let userId = localStorage.getItem("faustt.todo.userId") ?? "";
@@ -60,6 +61,10 @@
         try {
             isNewTodoModalWorking = true;
 
+            if (newTodoTitle.length < 1) {
+                throw new Error("Title must not be empty!");
+            }
+
             await backend.data.commands.createTodo({
                 userId: "",
                 title: newTodoTitle,
@@ -67,6 +72,11 @@
 
             newTodoTitle = "";
             isNewTodoModalOpen = false;
+        } catch (e) {
+            add({
+                intent: "danger",
+                text: e.message,
+            });
         } finally {
             isNewTodoModalWorking = false;
         }
@@ -74,10 +84,6 @@
 
     const openNewTodoModal = () => {
         isNewTodoModalOpen = true;
-    };
-
-    const closeNewTodoModal = () => {
-        isNewTodoModalOpen = false;
     };
 </script>
 
@@ -217,5 +223,10 @@
             class="w-full border-2 border-gray-300 p-2 focus:outline-none focus:border-yellow-400 rounded"
             autofocus
         />
+        <button
+            type="submit"
+            class="px-4 py-2 bg-gray-200 rounded active:bg-yellow-400 focus:outline-none active:text-white border-2 border-gray-300 active:border-yellow-500"
+            >Add</button
+        >
     </form>
 </Dialog>
