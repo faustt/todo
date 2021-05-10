@@ -5,7 +5,7 @@ export const _ = writable(__);
 export function changeLanguage(language: string) {
     language = language.toLowerCase().trim();
 
-    if (language === "de") {
+    if (language === "de" || language.startsWith("de-")) {
         translations = de_DE;
     } else {
         translations = {};
