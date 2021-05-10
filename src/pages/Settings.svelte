@@ -3,6 +3,7 @@
     import * as backend from "../backend";
     import Dialog from "../components/Dialog.svelte";
     import { add } from "../components/Toasts.svelte";
+    import { _ } from "../i18n";
 
     let hasStoragePermission = false;
     let isClearDataDialogOpen = false;
@@ -20,14 +21,14 @@
         } else {
             add({
                 intent: "info",
-                text: "Your browser does not seem to support persistent storage!",
+                text: $_("Your browser does not seem to support persistent storage!"),
             });
         }
     }
 
     async function rebuildProjections() {
         try {
-            add({ intent: "info", text: "Projections will be recreated" });
+            add({ intent: "info", text: $_("Projections will be recreated") });
             await backend.auth.commands.rebuildProjections();
             await backend.data.commands.rebuildProjections();
         } catch (e) {
@@ -43,12 +44,12 @@
         if (clearDataDialogConfirmation !== "delete") {
             add({
                 intent: "info",
-                text: "Please type delete to confirm.",
+                text: $_("Please type delete to confirm."),
             });
             return;
         }
 
-        add({ intent: "info", text: "All data is getting deleted" });
+        add({ intent: "info", text: $_("All data is getting deleted") });
 
         await backend.data.commands.clearData();
         await backend.auth.commands.clearData();
@@ -60,10 +61,10 @@
     }
 </script>
 
-<div class="text-2xl px-4 pt-4 p-8 text-center">Settings</div>
+<div class="text-2xl px-4 pt-4 p-8 text-center">{$_("Settings")}</div>
 <div class="flex flex-col gap-2 py-2">
     <div class="bg-gray-100 flex flex-row p-2 gap-4">
-        <div class="flex-1 flex items-center">Request the data for the service to be stored permanently.</div>
+        <div class="flex-1 flex items-center">{$_("Request the data for the service to be stored permanently.")}</div>
         <div class="w-36 flex items-center justify-center">
             <button
                 on:click={requestStorage}
@@ -79,38 +80,42 @@
                         />
                     </svg>
                 {:else}
-                    <span>Request storage</span>
+                    <span>{$_("Request storage")}</span>
                 {/if}
             </button>
         </div>
     </div>
     <div class="bg-gray-100 flex flex-row p-2 gap-4">
-        <div class="flex-1 flex items-center">Rebuild all data based on the event log.</div>
+        <div class="flex-1 flex items-center">{$_("Rebuild all data based on the event log.")}</div>
         <div class="w-36 flex items-center justify-center">
             <button
                 on:click={rebuildProjections}
                 class="bg-gray-200 flex-1 p-2 active:bg-yellow-400 active:text-white focus:outline-none border-2 border-gray-300 active:border-yellow-500 focus:border-yellow-400"
-                >Rebuild</button
+                >{$_("Rebuild")}</button
             >
         </div>
     </div>
     <div class="bg-gray-100 flex flex-row p-2 gap-4">
-        <div class="flex-1 flex items-center">Delete all data associated with this service.</div>
+        <div class="flex-1 flex items-center">{$_("Delete all data associated with this service.")}</div>
         <div class="w-36 flex items-center justify-center">
             <button
                 on:click={openClearDataDialog}
                 class="bg-red-500 flex-1 p-2 active:bg-red-600 text-white focus:outline-none border-2 border-red-400 focus:border-red-700"
-                >Delete data</button
+                >{$_("Delete data")}</button
             >
         </div>
     </div>
 </div>
 
 <Dialog bind:open={isClearDataDialogOpen}>
-    <form class="flex flex-col" on:submit|preventDefault={clearData}>
-        <div>Do you really want to delete all data?</div>
-        <div class="font-bold">This cannot be undone!</div>
-        <div class="mt-4">To confirm, please type <i>delete</i> in the field below:</div>
+    <form
+        class="flex flex-col"
+        disabled={clearDataDialogConfirmation !== "delete"}
+        on:submit|preventDefault={clearData}
+    >
+        <div>{$_("Do you really want to delete all data?")}</div>
+        <div class="font-bold">{$_("This cannot be undone!")}</div>
+        <div class="mt-4">{$_("To confirm, please type delete in the field below:")}</div>
         <div class="relative h-12 mt-2">
             <!-- svelte-ignore a11y-autofocus -->
             <input
@@ -122,8 +127,9 @@
             />
         </div>
         <button
-            class="mt-4 bg-red-500 flex-1 p-2 active:bg-red-600 text-white focus:outline-none border-2 border-red-400 focus:border-red-700"
-            >Delete all data</button
+            disabled={clearDataDialogConfirmation !== "delete"}
+            class="mt-4 bg-red-500 flex-1 p-2 active:bg-red-600 text-white focus:outline-none border-2 border-red-400 focus:border-red-700 disabled:bg-gray-200 disabled:border-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
+            >{$_("Delete all data")}</button
         >
     </form>
 </Dialog>

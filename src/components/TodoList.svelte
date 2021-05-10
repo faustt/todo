@@ -3,6 +3,7 @@
     import ReorderList from "./ReorderList.svelte";
     import Dialog from "./Dialog.svelte";
     import { add } from "./Toasts.svelte";
+    import { _ } from "../i18n";
 
     let isEditing = false;
     let userId = localStorage.getItem("faustt.todo.userId") ?? "";
@@ -187,7 +188,7 @@
                     />
                 </svg>
             </span>
-            <span>Add item</span>
+            <span>{$_("Add item")}</span>
         </button>
     {/if}
 </div>
@@ -213,12 +214,12 @@
 
 <Dialog bind:open={isNewTodoModalOpen}>
     <form class="flex flex-col gap-4" on:submit|preventDefault={createNewTodo} disabled={isNewTodoModalWorking}>
-        <div class="text-lg font-semibold tracking-tight text-gray-600 select-none">Add entry</div>
+        <div class="text-lg font-semibold tracking-tight text-gray-600 select-none">{$_("Add item")}</div>
         <!-- svelte-ignore a11y-autofocus -->
         <input
             disabled={isNewTodoModalWorking}
             type="text"
-            placeholder="text"
+            placeholder={$_("description")}
             bind:value={newTodoTitle}
             class="w-full border-2 border-gray-300 p-2 focus:outline-none focus:border-yellow-400 rounded"
             autofocus
@@ -226,7 +227,7 @@
         <button
             type="submit"
             class="px-4 py-2 bg-gray-200 rounded active:bg-yellow-400 focus:outline-none active:text-white border-2 border-gray-300 active:border-yellow-500"
-            >Add</button
+            >{$_("Add")}</button
         >
     </form>
 </Dialog>

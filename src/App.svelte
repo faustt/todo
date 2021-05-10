@@ -6,6 +6,8 @@
     import Register from "./pages/Register.svelte";
     import MainView from "./layouts/MainView.svelte";
     import NotFound from "./pages/NotFound.svelte";
+    import { onMount } from "svelte";
+    import { changeLanguage } from "./i18n";
 
     const routes = {
         "/": Home,
@@ -16,6 +18,10 @@
         "/register": Register,
         "*": NotFound,
     };
+
+    onMount(() => {
+        changeLanguage(navigator.language);
+    });
 </script>
 
 <Toasts />

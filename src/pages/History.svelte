@@ -1,5 +1,6 @@
 <script lang="ts">
     import * as backend from "../backend";
+    import { _ } from "../i18n";
 
     let events = backend.events.commands.getEvents({
         desc: true,
@@ -18,10 +19,10 @@
 
     const getDateKey = (date: Date) => {
         if (isSameDay(date, today())) {
-            return "today";
+            return $_("today");
         }
         if (isSameDay(date, yesterday())) {
-            return "yesterday";
+            return $_("yesterday");
         }
 
         const day = date.getDate().toString().padStart(2, "0");
@@ -68,22 +69,22 @@
         const scopedEvent = `${event.scope}/${event.event}`;
 
         if (scopedEvent === "todo/created") {
-            return "Todo item added";
+            return $_("Todo item added");
         } else if (scopedEvent === "todo/position-changed") {
-            return "Todo item moved";
+            return $_("Todo item moved");
         } else if (scopedEvent === "todo/deleted") {
-            return "Todo item deleted";
+            return $_("Todo item deleted");
         } else if (scopedEvent === "todo/done") {
-            return "Todo item completed";
+            return $_("Todo item completed");
         } else if (scopedEvent === "todo/unfinished") {
-            return "Todo item reverted to unfinished";
+            return $_("Todo item reverted to unfinished");
         }
 
         return `${event.scope}/${event.event}`;
     };
 </script>
 
-<div class="text-2xl px-4 pt-4 p-8 text-center">History</div>
+<div class="text-2xl px-4 pt-4 p-8 text-center">{$_("History")}</div>
 
 <div class="flex flex-col gap-4">
     {#await events then items}
