@@ -15,7 +15,7 @@ With todo you can manage your daily chores and keep your tasks in order. It help
 ## Features
 
 - **Offline.** Your data is never transmitted to any server.
-- **Event-source.** All actions done in the app are reversible.
+- **Event-sourced.** All actions done in the app are reversible.
 - **Efficient.** Organize your chores in an intuitive way.
 
 ## Development
