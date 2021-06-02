@@ -1,57 +1,46 @@
 <script lang="ts">
+    import { push } from "svelte-spa-router";
     import * as backend from "../backend";
     import ReorderList from "./ReorderList.svelte";
     import Dialog from "./Dialog.svelte";
     import { add } from "./Toasts.svelte";
     import { _ } from "../i18n";
 
-    export let categoryId: string;
-
     let isEditing = false;
     let userId = localStorage.getItem("faustt.todo.userId") ?? "";
-    let isNewTodoModalOpen = false;
-    let isNewTodoModalWorking = false;
-    let newTodoTitle = "";
-    $: todos = backend.data.getters.getTodos({ categoryId, orderBy: "position" });
+    let isNewCategoryModalOpen = false;
+    let isNewCategoryModalWorking = false;
+    let newCategoryName = "";
+    $: categories = backend.data.getters.getCategories({ userId: userId, orderBy: "position" });
 
-    async function deleteTodo(id: string) {
+    async function deleteCategory(id: string) {
         try {
-            await backend.data.commands.deleteTodo({
+            await backend.data.commands.deleteCategory({
                 id,
             });
         } catch {}
     }
 
-    async function toggleTodoStatus(item: any) {
-        try {
-            if (item.isDone) {
-                await backend.data.commands.markTodoAsUnfinished({
-                    id: item.id,
-                });
-            } else {
-                await backend.data.commands.markTodoAsDone({
-                    id: item.id,
-                });
-            }
-        } catch {}
+    async function gotoCategory(item: any) {
+        push(`/lists/${item.id}`);
     }
 
     async function handleItemMoved(event: CustomEvent) {
         const detail = event.detail as any;
 
-        if ($todos.items.length <= 1) {
+        if ($categories.items.length <= 1) {
             return;
         }
 
         if (detail.to === 0) {
             await backend.data.commands.changeTodoPosition({
                 id: detail.item.id,
-                beforeId: $todos.items[1].id,
+                beforeId: $categories.items[1].id,
             });
         } else {
             await backend.data.commands.changeTodoPosition({
                 id: detail.item.id,
-                afterId: $todos.items[detail.to - 1].id,
+                afterId: $categories.items[detail.to - 1].id,
             });
         }
     }
@@ -62,44 +51,43 @@
 
     const createNewTodo = async () => {
         try {
-            isNewTodoModalWorking = true;
+            isNewCategoryModalWorking = true;
 
-            if (newTodoTitle.length < 1) {
-                throw new Error("Title must not be empty!");
+            if (newCategoryName.length < 1) {
+                throw new Error("Name must not be empty!");
             }
 
-            await backend.data.commands.createTodo({
+            await backend.data.commands.createCategory({
                 userId: "",
-                categoryId,
-                title: newTodoTitle,
+                name: newCategoryName,
             });
 
-            newTodoTitle = "";
-            isNewTodoModalOpen = false;
+            newCategoryName = "";
+            isNewCategoryModalOpen = false;
         } catch (e) {
             add({
                 intent: "danger",
                 text: e.message,
             });
         } finally {
-            isNewTodoModalWorking = false;
+            isNewCategoryModalWorking = false;
         }
     };
 
-    const openNewTodoModal = () => {
-        isNewTodoModalOpen = true;
+    const openNewCategoryModal = () => {
+        isNewCategoryModalOpen = true;
     };
 </script>
 
 <div class="flex flex-col p-4 relative gap-2">
-    {#if $todos.loading && $todos.items.length > 0}
+    {#if $categories.loading && $categories.items.length > 0}
         <div
             class="absolute top-0 right-0 bottom-0 left-0 z-20 flex justify-center items-center text-white cursor-wait"
         />
     {/if}
     <ReorderList
         class="gap-0.5 bg-gray-200 rounded overflow-hidden"
-        items={$todos.items}
+        items={$categories.items}
         id={(item) => item.id}
         let:item
         on:itemmoved={handleItemMoved}
@@ -107,8 +95,8 @@
     >
         <div
             class="bg-gray-100 flex flex-row {item.isDone ? 'text-gray-300 bg-gray-50' : ''}"
-            data-test="todo-item"
-            data-test-title={item.title}
+            data-test="todo-category"
+            data-test-name={item.name}
         >
             {#if isEditing}
                 <div class="bg-gray-300 p-2 text-black">
@@ -133,14 +121,14 @@
                 class:ml-2={!isEditing}
                 on:touchstart|stopPropagation
                 on:mousedown|stopPropagation
-                on:click={() => !isEditing && toggleTodoStatus(item)}
+                on:click={() => !isEditing && gotoCategory(item)}
             >
-                {item.title}
+                {item.name}
             </div>
             {#if isEditing}
                 <button
                     class="p-2 bg-red-500 text-black focus:outline-none"
-                    on:click={() => deleteTodo(item.id)}
+                    on:click={() => deleteCategory(item.id)}
                     on:touchstart|stopPropagation
                     on:mousedown|stopPropagation
                 >
@@ -152,28 +140,13 @@
                         />
                     </svg>
                 </button>
-            {:else if item.isDone}
-                <div class="flex items-center justify-center p-2">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5 text-green-500"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                    >
-                        <path
-                            fill-rule="evenodd"
-                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                            clip-rule="evenodd"
-                        />
-                    </svg>
-                </div>
             {/if}
         </div>
     </ReorderList>
     {#if isEditing}
         <button
             class="bg-gray-100 flex flex-row gap-2 py-2 px-4 rounded focus:outline-none border-2 border-gray-200 focus:border-yellow-400 active:border-yellow-500 active:bg-yellow-400 active:text-yellow-900"
-            on:click={openNewTodoModal}
+            on:click={openNewCategoryModal}
         >
             <span>
                 <svg
@@ -191,15 +164,15 @@
                     />
                 </svg>
             </span>
-            <span>{$_("Add item")}</span>
+            <span>{$_("Add category")}</span>
         </button>
     {/if}
 </div>
 
 <button
     class="fixed bottom-14 right-0 m-6 w-16 h-16 rounded-full {isEditing
-        ? 'bg-green-500 text-white'
-        : 'bg-yellow-400 text-yellow-900'} focus:outline-none flex items-center justify-center shadow-lg"
+        ? 'bg-green-500'
+        : 'bg-yellow-400'} focus:outline-none text-yellow-900 flex items-center justify-center shadow-lg"
     on:click={toggleEditing}
 >
     {#if isEditing}
@@ -215,15 +188,15 @@
     {/if}
 </button>
 
-<Dialog bind:open={isNewTodoModalOpen}>
-    <form class="flex flex-col gap-4" on:submit|preventDefault={createNewTodo} disabled={isNewTodoModalWorking}>
+<Dialog bind:open={isNewCategoryModalOpen}>
+    <form class="flex flex-col gap-4" on:submit|preventDefault={createNewTodo} disabled={isNewCategoryModalWorking}>
         <div class="text-lg font-semibold tracking-tight text-gray-600 select-none">{$_("Add item")}</div>
         <!-- svelte-ignore a11y-autofocus -->
         <input
-            disabled={isNewTodoModalWorking}
+            disabled={isNewCategoryModalWorking}
             type="text"
             placeholder={$_("description")}
-            bind:value={newTodoTitle}
+            bind:value={newCategoryName}
             class="w-full border-2 border-gray-300 p-2 focus:outline-none focus:border-yellow-400 rounded"
             autofocus
         />

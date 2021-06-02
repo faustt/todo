@@ -12,6 +12,7 @@
     const routes = {
         "/": Home,
         "/lists": MainView,
+        "/lists/*": MainView,
         "/settings": MainView,
         "/history": MainView,
         "/login": Login,

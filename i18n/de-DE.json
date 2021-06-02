@@ -27,5 +27,8 @@
     "Your browser does not seem to support persistent storage!": "Dein Browser scheint keine permanente Speicherung zu unterstützen!",
     "Projections will be recreated": "Daten werden neu hergeleitet",
     "Please type delete to confirm.": "Bitte schreibe delete um zu Bestätigen",
-    "All data is getting deleted": "Alle Daten werden gelöscht"
+    "All data is getting deleted": "Alle Daten werden gelöscht",
+    "Category created": "Kategorie hinzugefügt",
+    "Category deleted": "Kategorie gelöscht",
+    "Categories": "Kategorien"
 }

@@ -4,6 +4,7 @@ import db from "./database";
 
 export interface CreateTodoArgs {
     userId: string;
+    categoryId: string;
     title: string;
 }
 
@@ -29,7 +30,30 @@ export interface MarkTodoAsUnfinishedArgs {
     id: string;
 }
 
+export interface CreateCategoryArgs {
+    userId: string;
+    name: string;
+}
+
+export interface DeleteCategoryArgs {
+    id: string;
+}
+
+export type ChangeCategoryPositionArgs =
+    | {
+          id: string;
+          beforeId: string;
+      }
+    | {
+          id: string;
+          afterId: string;
+      };
+
 export default {
+    ///////////
+    // Todos //
+    ///////////
+
     async createTodo(args: CreateTodoArgs) {
         const id = uuid();
 
@@ -39,6 +63,7 @@ export default {
             payload: {
                 id,
                 userId: args.userId,
+                categoryId: args.categoryId,
                 title: args.title,
             },
         });
@@ -95,6 +120,60 @@ export default {
             },
         });
     },
+
+    ////////////////
+    // Categories //
+    ////////////////
+
+    async createCategory(args: CreateCategoryArgs) {
+        const id = uuid();
+
+        backend.events.commands.publish({
+            scope: "category",
+            event: "created",
+            payload: {
+                id,
+                userId: args.userId,
+                name: args.name,
+            },
+        });
+    },
+
+    async deleteCategory(args: DeleteCategoryArgs) {
+        backend.events.commands.publish({
+            scope: "category",
+            event: "deleted",
+            payload: {
+                id: args.id,
+            },
+        });
+    },
+
+    async changeCategoryPosition(args: ChangeCategoryPositionArgs) {
+        if ("beforeId" in args && "afterId" in args) {
+            throw new Error("You can only provide either beforeId or afterId, not both!");
+        }
+
+        let position: any;
+        if ("beforeId" in args) {
+            position = { beforeId: args.beforeId };
+        } else {
+            position = { afterId: args.afterId };
+        }
+
+        backend.events.commands.publish({
+            scope: "category",
+            event: "position-changed",
+            payload: {
+                id: args.id,
+                ...position,
+            },
+        });
+    },
+
+    //////////
+    // Misc //
+    //////////
 
     async rebuildProjections() {
         await db.table("todos").clear();

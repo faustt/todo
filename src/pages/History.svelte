@@ -78,6 +78,10 @@
             return $_("Todo item completed");
         } else if (scopedEvent === "todo/unfinished") {
             return $_("Todo item reverted to unfinished");
+        } else if (scopedEvent === "category/created") {
+            return $_("Category created");
+        } else if (scopedEvent === "category/deleted") {
+            return $_("Category deleted");
         }
 
         return `${event.scope}/${event.event}`;
@@ -90,7 +94,7 @@
     {#await events then items}
         {#each groupEventsByDay(items) as list (list.dateKey)}
             <div class="flex flex-col gap-2">
-                <div class="bg-yellow-400 text-white px-4 py-2">
+                <div class="bg-yellow-400 text-yellow-900 font-semibold px-4 py-2">
                     {list.dateKey}
                 </div>
                 {#each list.items as item (item.id)}

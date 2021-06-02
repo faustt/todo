@@ -1,12 +1,14 @@
 <script lang="ts">
     import Router, { push, location } from "svelte-spa-router";
     import Lists from "../pages/Lists.svelte";
+    import List from "../pages/List.svelte";
     import Settings from "../pages/Settings.svelte";
     import History from "../pages/History.svelte";
     import colors from "tailwindcss/colors";
 
     const routes = {
         "/lists": Lists,
+        "/lists/:id": List,
         "/settings": Settings,
         "/history": History,
     };
@@ -18,7 +20,7 @@
 
 <div class="fixed top-0 right-0 bottom-0 left-0 flex flex-col items-stretch">
     <div
-        class="flex flex-row p-4 border-b-2 border-yellow-500 text-lg bg-yellow-400 text-white font-semibold tracking-tight"
+        class="flex flex-row p-4 border-b-2 border-yellow-500 text-lg bg-yellow-400 text-yellow-900 font-semibold tracking-tight"
     >
         Todo
     </div>
@@ -74,6 +76,6 @@
     }
 
     .menu-bar-item.active {
-        @apply bg-yellow-400 text-white border-yellow-500;
+        @apply bg-yellow-400 text-yellow-900 border-yellow-500;
     }
 </style>

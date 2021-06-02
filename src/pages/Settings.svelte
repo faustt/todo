@@ -68,7 +68,7 @@
         <div class="w-36 flex items-center justify-center">
             <button
                 on:click={requestStorage}
-                class="bg-gray-200 flex-1 p-2 active:bg-yellow-400 active:text-white focus:outline-none border-2 border-gray-300 active:border-yellow-500 focus:border-yellow-400 flex flex-row items-center justify-center gap-2 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:border-gray-200 disabled:text-gray-300"
+                class="bg-gray-200 flex-1 p-2 active:bg-yellow-400 active:text-yellow-900 focus:outline-none border-2 border-gray-300 active:border-yellow-500 focus:border-yellow-400 flex flex-row items-center justify-center gap-2 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:border-gray-200 disabled:text-gray-300"
                 disabled={hasStoragePermission}
             >
                 {#if hasStoragePermission}
@@ -90,7 +90,7 @@
         <div class="w-36 flex items-center justify-center">
             <button
                 on:click={rebuildProjections}
-                class="bg-gray-200 flex-1 p-2 active:bg-yellow-400 active:text-white focus:outline-none border-2 border-gray-300 active:border-yellow-500 focus:border-yellow-400"
+                class="bg-gray-200 flex-1 p-2 active:bg-yellow-400 active:text-yellow-900 focus:outline-none border-2 border-gray-300 active:border-yellow-500 focus:border-yellow-400"
                 >{$_("Rebuild")}</button
             >
         </div>
