@@ -171,8 +171,8 @@
 
 <button
     class="fixed bottom-14 right-0 m-6 w-16 h-16 rounded-full {isEditing
-        ? 'bg-green-500'
-        : 'bg-yellow-400'} focus:outline-none text-yellow-900 flex items-center justify-center shadow-lg"
+        ? 'bg-green-500 text-white'
+        : 'bg-yellow-400 text-yellow-900'} focus:outline-none flex items-center justify-center shadow-lg"
     on:click={toggleEditing}
 >
     {#if isEditing}
