@@ -33,12 +33,12 @@
         }
 
         if (detail.to === 0) {
-            await backend.data.commands.changeTodoPosition({
+            await backend.data.commands.changeCategoryPosition({
                 id: detail.item.id,
                 beforeId: $categories.items[1].id,
             });
         } else {
-            await backend.data.commands.changeTodoPosition({
+            await backend.data.commands.changeCategoryPosition({
                 id: detail.item.id,
                 afterId: $categories.items[detail.to - 1].id,
             });
