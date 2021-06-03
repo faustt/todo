@@ -4,6 +4,7 @@
     import Dialog from "./Dialog.svelte";
     import { add } from "./Toasts.svelte";
     import { _ } from "../i18n";
+    import { push } from "svelte-spa-router";
 
     export let categoryId: string;
 
@@ -88,6 +89,10 @@
 
     const openNewTodoModal = () => {
         isNewTodoModalOpen = true;
+    };
+
+    const goBack = () => {
+        push("/lists");
     };
 </script>
 
@@ -195,6 +200,19 @@
         </button>
     {/if}
 </div>
+
+<button
+    class="fixed bottom-14 left-0 m-6 w-16 h-16 rounded-full bg-yellow-400 text-yellow-900 focus:outline-none flex items-center justify-center shadow-lg"
+    on:click={goBack}
+>
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+        <path
+            fill-rule="evenodd"
+            d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z"
+            clip-rule="evenodd"
+        />
+    </svg>
+</button>
 
 <button
     class="fixed bottom-14 right-0 m-6 w-16 h-16 rounded-full {isEditing
