@@ -79,14 +79,14 @@
     };
 </script>
 
-<div class="flex flex-col p-4 relative gap-2">
+<div class="flex flex-col p-4 relative gap-4">
     {#if $categories.loading && $categories.items.length > 0}
         <div
             class="absolute top-0 right-0 bottom-0 left-0 z-20 flex justify-center items-center text-white cursor-wait"
         />
     {/if}
     <ReorderList
-        class="gap-0.5 bg-gray-200 rounded overflow-hidden"
+        class="gap-4"
         items={$categories.items}
         id={(item) => item.id}
         let:item
@@ -94,12 +94,14 @@
         disableDragging={!isEditing}
     >
         <div
-            class="bg-gray-100 flex flex-row {item.isDone ? 'text-gray-300 bg-gray-50' : ''}"
+            class="bg-gray-100 flex flex-row rounded-md overflow-hidden shadow active:shadow-lg select-none {item.isDone
+                ? 'text-gray-300 bg-gray-50'
+                : ''}"
             data-test="todo-category"
             data-test-name={item.name}
         >
             {#if isEditing}
-                <div class="bg-gray-300 p-2 text-black">
+                <div class="bg-gray-300 p-2 text-black flex items-center justify-center">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-6 w-6"
@@ -117,7 +119,7 @@
                 </div>
             {/if}
             <div
-                class="p-2 flex-1 {isEditing ? 'cursor-default' : 'cursor-pointer'}"
+                class="p-4 flex-1 {isEditing ? 'cursor-default' : 'cursor-pointer'}"
                 class:ml-2={!isEditing}
                 on:touchstart|stopPropagation
                 on:mousedown|stopPropagation
