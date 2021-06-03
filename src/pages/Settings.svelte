@@ -40,6 +40,17 @@
         isClearDataDialogOpen = true;
     }
 
+    async function exportData() {
+        const now = new Date();
+        const events = await backend.events.commands.getEvents();
+        const data = {
+            exportTimestamp: now.toISOString(),
+            events,
+        };
+
+        download(JSON.stringify(data), `faustt-todo-${now.getTime()}.json`, "text/json");
+    }
+
     async function clearData() {
         if (clearDataDialogConfirmation !== "delete") {
             add({
@@ -58,6 +69,27 @@
 
         clearDataDialogConfirmation = "";
         isClearDataDialogOpen = false;
+    }
+
+    // https://stackoverflow.com/a/30832210
+    function download(data, filename, type) {
+        var file = new Blob([data], { type: type });
+        if (window.navigator.msSaveOrOpenBlob)
+            // IE10+
+            window.navigator.msSaveOrOpenBlob(file, filename);
+        else {
+            // Others
+            var a = document.createElement("a"),
+                url = URL.createObjectURL(file);
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(function () {
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            }, 0);
+        }
     }
 </script>
 
@@ -92,6 +124,16 @@
                 on:click={rebuildProjections}
                 class="bg-gray-200 flex-1 p-2 active:bg-yellow-400 active:text-yellow-900 focus:outline-none border-2 border-gray-300 active:border-yellow-500 focus:border-yellow-400"
                 >{$_("Rebuild")}</button
+            >
+        </div>
+    </div>
+    <div class="bg-gray-100 flex flex-row p-2 gap-4">
+        <div class="flex-1 flex items-center">{$_("Export all data stored in the service.")}</div>
+        <div class="w-36 flex items-center justify-center">
+            <button
+                on:click={exportData}
+                class="bg-gray-200 flex-1 p-2 active:bg-yellow-400 active:text-yellow-900 focus:outline-none border-2 border-gray-300 active:border-yellow-500 focus:border-yellow-400"
+                >{$_("Export data")}</button
             >
         </div>
     </div>

@@ -31,5 +31,7 @@
     "Category created": "Kategorie hinzugefügt",
     "Category deleted": "Kategorie gelöscht",
     "Categories": "Kategorien",
-    "Add category": "Kategorie hinzufügen"
+    "Add category": "Kategorie hinzufügen",
+    "Export data": "Exportieren",
+    "Export all data stored in the service.": "Exportiert alle Daten des Dienstes."
 }
