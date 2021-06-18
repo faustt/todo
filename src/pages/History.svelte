@@ -92,7 +92,7 @@
 
 <div class="text-2xl px-4 pt-4 p-8 text-center bg-yellow-500 text-yellow-900">{$_("History")}</div>
 
-<div class="flex flex-col gap-4">
+<div class="flex flex-col">
     {#await events then items}
         {#each groupEventsByDay(items) as list (list.dateKey)}
             <div class="flex flex-col gap-2">
