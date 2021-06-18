@@ -93,7 +93,7 @@
     }
 </script>
 
-<div class="text-2xl px-4 pt-4 p-8 text-center">{$_("Settings")}</div>
+<div class="text-2xl p-4 mb-4 text-center bg-yellow-500 text-yellow-900">{$_("Settings")}</div>
 <div class="flex flex-col gap-2 py-2">
     <div class="bg-gray-100 flex flex-row p-2 gap-4">
         <div class="flex-1 flex items-center">{$_("Request the data for the service to be stored permanently.")}</div>

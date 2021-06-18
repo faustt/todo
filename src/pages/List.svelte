@@ -11,7 +11,7 @@
 </script>
 
 {#if $category.item}
-    <div class="text-2xl px-4 pt-4 p-8 text-center">{$category.item.name}</div>
+    <div class="text-2xl p-4 mb-4 text-center bg-yellow-500 text-yellow-900">{$category.item.name}</div>
     <TodoList categoryId={$category.item.id} />
 {/if}
 <div class="h-24" />
