@@ -1,4 +1,6 @@
 <script lang="ts">
+    // @hmr:keep-all
+
     import * as backend from "../backend";
     import { _ } from "../i18n";
 
@@ -88,13 +90,13 @@
     };
 </script>
 
-<div class="text-2xl px-4 pt-4 p-8 text-center">{$_("History")}</div>
+<div class="text-2xl px-4 pt-4 p-8 text-center bg-yellow-500 text-yellow-900">{$_("History")}</div>
 
 <div class="flex flex-col gap-4">
     {#await events then items}
         {#each groupEventsByDay(items) as list (list.dateKey)}
             <div class="flex flex-col gap-2">
-                <div class="bg-yellow-400 text-yellow-900 font-semibold px-4 py-2">
+                <div class="bg-yellow-500 text-yellow-900 font-semibold px-4 py-2 sticky top-0 left-0 right-0">
                     {list.dateKey}
                 </div>
                 {#each list.items as item (item.id)}
