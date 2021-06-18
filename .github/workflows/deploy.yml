@@ -25,6 +25,11 @@ jobs:
       # - run: yarn test
       - run: yarn build
 
+      - name: Run release
+        run: yarn dlx @faustt/release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - run: |
           sudo mkdir -p $DEPLOYED_FILES
           sudo cp -a ./dist/. $DEPLOYED_FILES/

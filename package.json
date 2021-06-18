@@ -1,6 +1,7 @@
 {
     "name": "todo",
-    "version": "0.0.0",
+    "version": "0.0.0-dev",
+    "private": true,
     "scripts": {
         "dev": "vite",
         "build": "vite build && yarn build:post",
