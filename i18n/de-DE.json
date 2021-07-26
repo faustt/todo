@@ -33,5 +33,7 @@
     "Categories": "Kategorien",
     "Add category": "Kategorie hinzufügen",
     "Export data": "Exportieren",
-    "Export all data stored in the service.": "Exportiert alle Daten des Dienstes."
+    "Export all data stored in the service.": "Exportiert alle Daten des Dienstes.",
+    "Import data": "Importieren",
+    "Import all data from an exported file.": "Importiert alle Daten von einer exportierten Datei."
 }
