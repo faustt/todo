@@ -2,7 +2,7 @@ import * as backend from "..";
 import events from "./events";
 import { invalidate, refresh } from "./getters";
 
-backend.events.commands.registerEventProcessor({
+export const processor = backend.events.commands.registerEventProcessor({
     name: "data",
     events,
     hooks: {

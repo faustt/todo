@@ -8,6 +8,8 @@
     let hasStoragePermission = false;
     let isClearDataDialogOpen = false;
     let clearDataDialogConfirmation = "";
+    let inputElement: HTMLInputElement;
+    let importedFiles: FileList;
 
     onMount(() => {
         navigator?.storage?.persisted()?.then((result) => {
@@ -49,6 +51,47 @@
         };
 
         download(JSON.stringify(data), `faustt-todo-${now.getTime()}.json`, "text/json");
+    }
+
+    async function importData() {
+        console.log("test");
+
+        if (importedFiles.length !== 1) {
+            add({
+                intent: "danger",
+                text: $_("Please only provide a single file to import!"),
+            });
+            return;
+        }
+
+        let data: any;
+
+        try {
+            data = JSON.parse(await importedFiles[0].text());
+        } catch {
+            add({
+                intent: "danger",
+                text: $_("Invalid file format!"),
+            });
+            return;
+        }
+
+        await backend.data.commands.clearData();
+        await backend.auth.commands.clearData();
+        await backend.events.commands.clearEvents();
+
+        for (const event of data.events) {
+            await backend.events.commands.import(event);
+        }
+
+        window.location.reload();
+    }
+
+    $: {
+        importedFiles;
+        if (importedFiles?.length > 0) {
+            importData();
+        }
     }
 
     async function clearData() {
@@ -136,6 +179,17 @@
                 >{$_("Export data")}</button
             >
         </div>
+    </div>
+    <div class="bg-gray-100 flex flex-row p-2 gap-4">
+        <div class="flex-1 flex items-center">{$_("Import all data from an exported file.")}</div>
+        <div class="w-36 flex items-center justify-center">
+            <button
+                on:click={() => inputElement.click()}
+                class="bg-gray-200 flex-1 p-2 active:bg-yellow-400 active:text-yellow-900 focus:outline-none border-2 border-gray-300 active:border-yellow-500 focus:border-yellow-400"
+                >{$_("Import data")}</button
+            >
+        </div>
+        <input type="file" class="hidden" bind:this={inputElement} accept=".json" bind:files={importedFiles} />
     </div>
     <div class="bg-gray-100 flex flex-row p-2 gap-4">
         <div class="flex-1 flex items-center">{$_("Delete all data associated with this service.")}</div>

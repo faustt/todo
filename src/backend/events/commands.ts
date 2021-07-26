@@ -7,6 +7,14 @@ export interface PublishArgs {
     payload: any;
 }
 
+export interface ImportArgs {
+    order: number;
+    timestamp: Date;
+    scope: string;
+    event: string;
+    payload: any;
+}
+
 export interface CreateEventProcessorArgs {
     /**
      * The name of the processor. Must be unique to the event store.
@@ -48,6 +56,19 @@ export default {
             ...args,
             id: uuid(),
             timestamp: new Date(),
+        });
+    },
+
+    async import(args: ImportArgs) {
+        await db.table("events").put({
+            ...args,
+            timestamp: new Date(args.timestamp),
+        });
+    },
+
+    async clearEvents() {
+        await db.transaction("rw", "events", async (trans) => {
+            await trans.table("events").clear();
         });
     },
 
@@ -238,6 +259,12 @@ export default {
                 "color:black",
             );
         })();
+
+        return {
+            unsubscribe() {
+                eventProcessors.get(args.name).unsubscribe();
+            },
+        };
     },
 
     async resetEventProcessor(args: ResetEventProcessorArgs) {

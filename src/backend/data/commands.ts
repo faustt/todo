@@ -1,6 +1,7 @@
 import * as backend from "..";
 import { v4 as uuid } from "uuid";
 import db from "./database";
+import { processor } from ".";
 
 export interface CreateTodoArgs {
     userId: string;
@@ -187,5 +188,6 @@ export default {
         await backend.events.commands.resetEventProcessor({
             name: "data",
         });
+        processor.unsubscribe();
     },
 };
