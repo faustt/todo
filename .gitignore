@@ -8,3 +8,4 @@
 !.yarn/plugins
 !.yarn/sdks
 !.yarn/versions
+/src/version.json

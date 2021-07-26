@@ -5,6 +5,7 @@
     import Settings from "../pages/Settings.svelte";
     import History from "../pages/History.svelte";
     import colors from "tailwindcss/colors";
+    import { version } from "../version.json";
 
     const routes = {
         "/lists": Lists,
@@ -19,10 +20,9 @@
 </svelte:head>
 
 <div class="fixed top-0 right-0 bottom-0 left-0 flex flex-col items-stretch">
-    <div
-        class="flex flex-row p-4 border-b-2 border-yellow-500 text-lg bg-yellow-400 text-yellow-900 font-semibold tracking-tight"
-    >
-        Todo
+    <div class="p-4 border-b-2 border-yellow-500 text-lg bg-yellow-400 text-yellow-900 font-semibold tracking-tight">
+        <span>Todo</span>
+        <span class="inline-block text-xs sup -translate-y-2 text-yellow-900 opacity-40">v{version}</span>
     </div>
     <div class="flex-1 self-stretch overflow-auto">
         <Router {routes} />
