@@ -189,5 +189,6 @@ export default {
             name: "data",
         });
         processor.unsubscribe();
+        window.localStorage.removeItem("faustt.todo.splash");
     },
 };

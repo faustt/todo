@@ -8,6 +8,7 @@
     import NotFound from "./pages/NotFound.svelte";
     import { onMount } from "svelte";
     import { changeLanguage } from "./i18n";
+    import Splash from "./components/Splash.svelte";
 
     const routes = {
         "/": Home,
@@ -27,3 +28,4 @@
 
 <Toasts />
 <Router {routes} />
+<Splash />
