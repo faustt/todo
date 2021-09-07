@@ -3,6 +3,8 @@ import App from "./App.svelte";
 // @ts-ignore
 import { add } from "./components/Toasts.svelte";
 import { registerSW } from "virtual:pwa-register";
+import { _ } from "./i18n";
+import { get } from "svelte/store";
 
 const updateSW = registerSW({
     onNeedRefresh() {
@@ -13,7 +15,7 @@ const updateSW = registerSW({
     onOfflineReady() {
         add({
             intent: "info",
-            text: "You can now work offline!",
+            text: get(get(_)("You can now work offline!")),
         });
     },
 });
