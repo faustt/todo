@@ -1204,6 +1204,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@faustt/prettier-config@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "@faustt/prettier-config@npm:2.0.2"
+  dependencies:
+    prettier-plugin-organize-imports: ^2.3.4
+    prettier-plugin-package: ^1.3.0
+    prettier-plugin-svelte: ^2.4.0
+  peerDependencies:
+    prettier: "*"
+    typescript: "*"
+  checksum: 14ca8f49cc0a67008ce3cb4b14426d5dca629b33466959c4b3bacdf90dcb5c999fd3329b3bfd6b036069256da6618debacc7e436b78cddd1d9295f9d4eae932f
+  languageName: node
+  linkType: hard
+
 "@faustt/release@npm:^0.9.1":
   version: 0.9.1
   resolution: "@faustt/release@npm:0.9.1"
@@ -4397,6 +4411,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"prettier-plugin-organize-imports@npm:^2.3.4":
+  version: 2.3.4
+  resolution: "prettier-plugin-organize-imports@npm:2.3.4"
+  peerDependencies:
+    prettier: ">=2.0"
+    typescript: ">=2.9"
+  checksum: 5921c9247b71665fce35935e9b29acef2450e5cd80e274d506407a1286278098a3e6c7386b160b095041c188707f0f09042bb3dc63e9bb5ba35b534eef1f7ad0
+  languageName: node
+  linkType: hard
+
+"prettier-plugin-package@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "prettier-plugin-package@npm:1.3.0"
+  peerDependencies:
+    prettier: ^2.0.0
+  checksum: cdf5748532141f7feed1d04da36b968a7ea4e0911a39846b29fb119b07556457fda744f100010b6538787ab693523aa4b17c89791efb15f05e7344207da41fdd
+  languageName: node
+  linkType: hard
+
 "prettier-plugin-svelte@npm:^2.2.0":
   version: 2.2.0
   resolution: "prettier-plugin-svelte@npm:2.2.0"
@@ -4404,6 +4437,16 @@ __metadata:
     prettier: ^1.16.4 || ^2.0.0
     svelte: ^3.2.0
   checksum: 80835696c33995c0fac921f4d1f0481aa712bbaafa52ae1f663b2582d11be2937f0597bd6e9d14b23e4093bc2ff17b6b42ee0ffa9c0d8200bf982a708a2f362d
+  languageName: node
+  linkType: hard
+
+"prettier-plugin-svelte@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "prettier-plugin-svelte@npm:2.4.0"
+  peerDependencies:
+    prettier: ^1.16.4 || ^2.0.0
+    svelte: ^3.2.0
+  checksum: fb1d76c87824e4cc55dfdfddbe99679729f4aecde94857fe7c0c91a85e01e3c604e4c24013f8aff0e126e2951645ada6d2c1155b9142bbe6579cd5bc0cc8d72b
   languageName: node
   linkType: hard
 
@@ -5437,6 +5480,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "todo@workspace:."
   dependencies:
+    "@faustt/prettier-config": ^2.0.2
     "@faustt/release": ^0.9.1
     "@sveltejs/vite-plugin-svelte": ^1.0.0-next.7
     "@types/glob": ^7
