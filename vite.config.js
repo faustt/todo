@@ -13,27 +13,33 @@ export default defineConfig({
 				short_name: "Todo",
 				name: "Todo",
 				description: "Keep your todos in order.",
-				start_url: "/",
+				start_url: process.env["APP_BASE_PATH"] ?? "/",
 				background_color: "#FBBF24",
 				display: "standalone",
-				scope: "/",
+				scope: process.env["APP_BASE_PATH"] ?? "/",
 				theme_color: "#FBBF24",
 				orientation: "portrait",
 				icons: [
 					{
-						src: "/icons/icon-196.png",
+						src: `${
+							process.env["APP_BASE_PATH"] ?? "/"
+						}icons/icon-196.png`,
 						type: "image/png",
 						sizes: "196x196",
 						purpose: "maskable",
 					},
 					{
-						src: "/icons/icon-192.png",
+						src: `${
+							process.env["APP_BASE_PATH"] ?? "/"
+						}icons/icon-192.png`,
 						type: "image/png",
 						sizes: "192x192",
 						purpose: "any",
 					},
 					{
-						src: "/icons/icon-512.png",
+						src: `${
+							process.env["APP_BASE_PATH"] ?? "/"
+						}icons/icon-512.png`,
 						type: "image/png",
 						sizes: "512x512",
 						purpose: "any",
