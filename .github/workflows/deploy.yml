@@ -12,6 +12,7 @@ jobs:
   deploy:
     name: "Deploy"
     runs-on: ubuntu-latest
+    concurrency: deploy-${{ github.ref }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -41,3 +42,4 @@ jobs:
           git push origin
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          APP_BASE_PATH: todo
