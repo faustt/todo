@@ -29,7 +29,7 @@
 			>v{version}</span
 		>
 	</div>
-	<div class="flex-1 self-stretch overflow-auto">
+	<div class="flex-1 self-stretch overflow-auto relative">
 		<Router {routes} />
 	</div>
 	<div class="flex flex-row">
