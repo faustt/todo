@@ -23,7 +23,10 @@ jobs:
           node-version: "14"
 
       - run: yarn rebuild
+
       - run: yarn build
+        env:
+          APP_BASE_PATH: todo
 
       - name: Run release
         run: yarn release
@@ -42,4 +45,3 @@ jobs:
           git push origin
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          APP_BASE_PATH: todo
