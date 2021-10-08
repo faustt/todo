@@ -22,24 +22,24 @@ export default defineConfig({
 				icons: [
 					{
 						src: `${
-							process.env["APP_BASE_PATH"] ?? "/"
-						}icons/icon-196.png`,
+							process.env["APP_BASE_PATH"] ?? ""
+						}/icons/icon-196.png`,
 						type: "image/png",
 						sizes: "196x196",
 						purpose: "maskable",
 					},
 					{
 						src: `${
-							process.env["APP_BASE_PATH"] ?? "/"
-						}icons/icon-192.png`,
+							process.env["APP_BASE_PATH"] ?? ""
+						}/icons/icon-192.png`,
 						type: "image/png",
 						sizes: "192x192",
 						purpose: "any",
 					},
 					{
 						src: `${
-							process.env["APP_BASE_PATH"] ?? "/"
-						}icons/icon-512.png`,
+							process.env["APP_BASE_PATH"] ?? ""
+						}/icons/icon-512.png`,
 						type: "image/png",
 						sizes: "512x512",
 						purpose: "any",
