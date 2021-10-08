@@ -22,7 +22,6 @@ jobs:
           node-version: "14"
 
       - run: yarn rebuild
-      # - run: yarn test
       - run: yarn build
 
       - name: Run release
@@ -31,19 +30,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - run: |
-          sudo mkdir -p $DEPLOYED_FILES
-          sudo cp -a ./dist/. $DEPLOYED_FILES/
-      - run: git switch --orphan static-website
-      - run: ls -lah
-      - run: |
-          sudo rm -rf ./*
-          sudo rm -rf ./.yarn
-      - run: ls -lah
-      - run: sudo cp -a $DEPLOYED_FILES/. ./
-
-      - run: |
+          git clone --branch static-site https://${GH_TOKEN}@github.com/faustt/apps /tmp/apps
+          sudo mkdir -p /tmp/apps/public/todo
+          sudo cp -a ./dist/. /tmp/apps/public/todo/
+          cd /tmp/apps
           git config --global user.email "github-actions@users.noreply.github.com"
           git config --global user.name "github-actions"
           git add .
-          git commit -m "[automated] Update static artifacts"
-          git push origin static-website --force
+          git commit -m "[automated] Update todo artifacts"
+          git push origin
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
