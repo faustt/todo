@@ -4,9 +4,22 @@
 	import * as backend from "../backend";
 	import { _ } from "../i18n";
 
-	let events = backend.events.commands.getEvents({
-		desc: true,
-	});
+	const todoNames = new Map<string, string>();
+	const categoryNames = new Map<string, string>();
+
+	let events = backend.events.commands
+		.getEvents({
+			desc: true,
+		})
+		.then((events) =>
+			events
+				.reverse()
+				.map((event) => ({
+					...event,
+					description: getHumanReadableDescription(event),
+				}))
+				.reverse(),
+		);
 
 	const isSameDay = (a: Date, b: Date) => {
 		return (
@@ -77,19 +90,30 @@
 		const scopedEvent = `${event.scope}/${event.event}`;
 
 		if (scopedEvent === "todo/created") {
-			return $_("Todo item added");
+			const name = event.payload.title;
+			todoNames.set(event.payload.id, name);
+			return $_("Todo item added") + ": " + name;
 		} else if (scopedEvent === "todo/position-changed") {
-			return $_("Todo item moved");
+			const name = todoNames.get(event.payload.id);
+			return $_("Todo item moved") + ": " + name;
 		} else if (scopedEvent === "todo/deleted") {
-			return $_("Todo item deleted");
+			const name = todoNames.get(event.payload.id);
+			todoNames.delete(event.payload.id);
+			return $_("Todo item deleted") + ": " + name;
 		} else if (scopedEvent === "todo/done") {
-			return $_("Todo item completed");
+			const name = todoNames.get(event.payload.id);
+			return $_("Todo item completed") + ": " + name;
 		} else if (scopedEvent === "todo/unfinished") {
-			return $_("Todo item reverted to unfinished");
+			const name = todoNames.get(event.payload.id);
+			return $_("Todo item reverted to unfinished") + ": " + name;
 		} else if (scopedEvent === "category/created") {
-			return $_("Category created");
+			const name = event.payload.name;
+			categoryNames.set(event.payload.id, name);
+			return $_("Category created") + ": " + name;
 		} else if (scopedEvent === "category/deleted") {
-			return $_("Category deleted");
+			const name = categoryNames.get(event.payload.id);
+			categoryNames.delete(event.payload.id);
+			return $_("Category deleted") + ": " + name;
 		}
 
 		return `${event.scope}/${event.event}`;
@@ -112,9 +136,7 @@
 				{#each list.items as item (item.id)}
 					<div class="px-8 py-2">
 						<div>{getTime(item.timestamp)}</div>
-						<div>
-							{getHumanReadableDescription(item)}
-						</div>
+						<div>{item.description}</div>
 					</div>
 				{/each}
 			</div>
