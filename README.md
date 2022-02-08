@@ -31,7 +31,7 @@ git clone git@github.com:faustt/todo.git
 Install dependencies:
 
 ```bash
-yarn --immutable
+yarn
 ```
 
 Start a development server:
