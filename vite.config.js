@@ -51,11 +51,5 @@ export default defineConfig({
 				// workbox options for generateSW
 			},
 		}),
-	],
-	server: {
-		https: {
-			cert: readFile(`${__dirname}/certs/cert.pem`),
-			key: readFile(`${__dirname}/certs/privkey.pem`),
-		},
-	},
+	]
 });
